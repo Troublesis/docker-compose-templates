@@ -1,0 +1,53 @@
+# 项目主页: https://github.com/diygod/rsshub
+# docker hub 更新页: https://hub.docker.com/r/diygod/rsshub/tags
+
+services:
+  rsshub:
+    image: diygod/rsshub:chromium-bundled
+    container_name: rsshub
+    restart: always
+    ports:
+      - "1200:1200"
+    environment:
+      NODE_ENV: production
+      CACHE_TYPE: redis
+      REDIS_URL: "redis://redis:6379/"
+      PUPPETEER_WS_ENDPOINT: "ws://browserless:3003" # marked
+      # TWITTER_USERNAME: "xxxx@mail.com"
+      # TWITTER_AUTH_TOKEN: "xxxxxxxxxxxxxxxxxxxxxxxx" # 登录x，F12, 去到network选项, 选择fetch/xhr, 搜索 "api"， 从cookie中获取auth_token
+
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - browserless
+
+    browserless: # marked
+        image: browserless/chrome #
+        container_name: browserless-chrome
+        restart: always # marked
+        ulimits: # marked
+            core: # marked
+                hard: 0 # marked
+                soft: 0 # marked
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://192.168.0.47:3003/pressure"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+    redis:
+        image: redis:alpine
+        container_name: redis-rss
+        restart: always
+        volumes:
+            - redis-data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 5s
+
+volumes:
+    redis-data:

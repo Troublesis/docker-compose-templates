@@ -1,0 +1,14 @@
+# 项目主页: https://github.com/gnmyt/Nexterm
+# docker hub 更新页: https://hub.docker.com/r/germannewsmaker/nexterm/tags
+
+services:
+  nexterm:
+    image: germannewsmaker/nexterm:1.0.5-OPEN-PREVIEW
+    container_name: nexterm
+    volumes:
+      - ./data:/app/data
+    environment:
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-835711198026bbda2d54bbb64d47394823d98e421cdff3ac631a9e91dd0c2441} # 这里使用一个 base64‑encoded 32‑byte 的密钥，linux中可使用`openssl rand -hex 32`命令生成。请自己生成一个其他的。
+    ports:
+      - 6989:6989
+    restart: always

@@ -1,0 +1,22 @@
+# 项目主页: https://github.com/MediaBrowser/Emby
+# docker hub 更新页: https://hub.docker.com/r/linuxserver/emby/tags
+
+services:
+  emby:
+    image: linuxserver/emby:latest
+    container_name: emby
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config:/config
+      - ./transcode:/transcode
+      - ./media:/media
+    ports:
+      - 8096:8096 # http
+      - 8920:8920 # https 可选
+    # devices: 可选, 硬件加速
+    #   - /dev/dri/renderD128:/dev/dri/renderD128
+    #   - /dev/dri/card0:/dev/dri/card0
+    restart: always

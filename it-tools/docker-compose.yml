@@ -1,0 +1,10 @@
+# 项目主页: https://github.com/corentinth/it-tools
+# docker hub 更新页: https://hub.docker.com/r/corentinth/it-tools/tags
+
+services:
+  app:
+    image: ghcr.io/corentinth/it-tools:latest
+    container_name: it_tools
+    restart: unless-stopped
+    ports:
+      - "80:80"

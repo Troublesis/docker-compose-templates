@@ -1,0 +1,20 @@
+# 项目主页: https://github.com/FreshRSS/FreshRSS
+# docker hub 更新页: https://hub.docker.com/r/freshrss/freshrss/tags
+
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: freshrss
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - ./data:/var/www/FreshRSS/data
+      - ./extensions:/var/www/FreshRSS/extensions
+    environment:
+      - TZ=Asia/Shanghai
+      - CRON_MIN='3,33'
+      # - TRUSTED_PROXY="172.16.0.1/12 192.168.0.1/16"
+    ports:
+      - "80:80"

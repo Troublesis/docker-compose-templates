@@ -1,0 +1,14 @@
+# 项目主页: https://github.com/whyour/qinglong
+# docker hub 更新页: https://hub.docker.com/r/whyour/qinglong/tags
+
+services:
+  web:
+    image: whyour/qinglong:latest
+    container_name: qinglong
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./data:/ql/data
+    ports:
+      - 5700:5700
+    restart: always

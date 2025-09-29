@@ -1,0 +1,37 @@
+# 项目主页: https://github.com/QuantumNous/new-api
+# docker hub 更新页: https://hub.docker.com/r/calciumion/new-api/tags
+
+services:
+  app:
+    container_name: new-api
+    image: "calciumion/new-api:latest"
+    environment:
+      - REDIS_CONN_STRING=redis://redis
+      - SESSION_SECRET=very-secure-secret
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./data:/data
+      - ./logs:/app/logs
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - redis
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q -O - http://localhost:3000/api/status | grep -o '\"success\":\\s*true' | awk -F: '{print $2}'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - bridge
+
+  redis:
+    container_name: new-api-redis
+    image: redis:latest
+    restart: always
+    networks:
+      - bridge
+
+networks:
+  bridge:
+    driver: bridge

@@ -1,0 +1,18 @@
+# 项目主页: https://github.com/icret/EasyImages2.0
+# docker hub 更新页: https://hub.docker.com/r/ddsderek/easyimage/tags
+
+services:
+  easyimage:
+    image: ddsderek/easyimage:latest
+    container_name: easyimage
+    ports:
+      - "80:80"
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID=1000
+      - PGID=1000
+      - DEBUG=false
+    volumes:
+      - ./config:/app/web/config
+      - ./image:/app/web/i
+    restart: always

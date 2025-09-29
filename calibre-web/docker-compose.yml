@@ -1,0 +1,25 @@
+# 项目主页: https://github.com/johngong/calibre-web
+# docker hub 更新页: https://hub.docker.com/r/johngong/calibre-web/tags
+
+services:
+  calibre-mango:
+    image: johngong/calibre-web:latest
+    container_name: calibre
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - CALIBRE_SERVER_WEB_LANGUAGE=zh_CN
+      - CALIBRE_ASCII_FILENAME=false
+      - CALIBRE_WEB_LANGUAGE=zh_Hans_CN
+      - TZ=Asia/Shanghai
+      - ENABLE_CALIBRE_SERVER_OPDS=true
+      # - CALIBRE_SERVER_USER=${CALIBRE_SERVER_USER}
+      # - CALIBRE_SERVER_PASSWORD=${CALIBRE_SERVER_PASSWORD}
+    volumes:
+      - ./books:/books
+      - ./autoaddbooks:/autoaddbooks
+      - ./config:/config
+    ports:
+      - 8083:8083
+      - 8080:8080
+    restart: unless-stopped

@@ -1,0 +1,12 @@
+# 项目主页: https://github.com/amir20/dozzle
+# docker hub 更新页: https://hub.docker.com/r/amir20/dozzle/tags
+
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+    restart: always

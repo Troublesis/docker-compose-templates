@@ -1,0 +1,52 @@
+# 项目主页: https://github.com/n8n-io/n8n
+# docker hub 更新页: https://hub.docker.com/r/deluxebear/n8n/tags
+
+services:
+  # docker run -it --rm --name n8n -p 5678:5678  -v n8n_data:/home/node/.n8n ghcr.io/deluxebear/n8n:chs
+  # N8N_RELEASE_TYPE=stable -e N8N_DIAGNOSTICS_ENABLED=false -e N8N_VERSION_NOTIFICATIONS_ENABLED=false -e N8N_HIDE_USAGE_PAGE=true -e N8N_LICENSE_AUTO_RENEW_ENABLED=false -e N8N_RUNNERS_ENABLED=true -e NODE_ENV=development -e N8N_DEFAULT_LOCALE=zh-CN -e N8N_ENTERPRISE_MOCK=true -v n8n_data:/home/node/.n8n ghcr.io/deluxebear/n8n:chs
+  n8n:
+    image: ghcr.io/deluxebear/n8n:chs
+    container_name: n8n
+    restart: always
+    ports:
+      - 5678:5678
+    environment:
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_SECURE_COOKIE=false
+      # - WEBHOOK_URL=https://your.domain.com
+      - N8N_RUNNERS_ENABLED=true
+      - NODE_ENV=production
+      - TZ=Asia/Shanghai
+      - N8N_RELEASE_TYPE=stable
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - N8N_HIDE_USAGE_PAGE=true
+      - N8N_LICENSE_AUTO_RENEW_ENABLED=false
+      - NODE_ENV=development
+      - N8N_DEFAULT_LOCALE=zh-CN
+      - N8N_ENTERPRISE_MOCK=true
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./data:/home/node/.n8n
+      - ./files:/files
+    networks:
+      - internal
+
+  # caddy:
+  #   image: caddy:latest
+  #   container_name: caddy
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile  # Make sure this is a file!
+  #   depends_on:
+  #     - n8n
+  #   networks:
+  #     - internal
+  #   restart: unless-stopped
+
+networks:
+  internal:
+    driver: bridge

@@ -1,0 +1,15 @@
+# 项目主页: https://hub.docker.com/r/pawelmalak/flame
+# docker hub 更新页: https://hub.docker.com/r/pawelmalak/flame/tags
+
+services:
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    environment:
+      - PASSWORD=${PASSWORD:-password}
+    volumes:
+      - ./data:/app/data
+      # - /var/run/docker.sock:/var/run/docker.sock # 可选，开启docker监控组件
+    ports:
+      - 5005:5005
+    restart: always

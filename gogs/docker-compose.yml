@@ -1,0 +1,13 @@
+# 项目主页: https://github.com/gogs/gogs
+# docker hub 更新页: https://hub.docker.com/r/gogs/gogs/tags
+
+services:
+  gogs:
+    image: gogs/gogs:latest
+    container_name: gogs
+    ports:
+      - "2222:22" # ssh 端口
+      - "3000:3000" # http 端口
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

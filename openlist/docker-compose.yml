@@ -1,0 +1,19 @@
+# 项目主页: https://github.com/OpenListTeam/OpenList
+# docker hub 更新页: https://hub.docker.com/r/openlistteam/openlist/tags
+
+services:
+  openlist:
+    # 如果忘记密码进入终端输入：`./openlist admin set 1`
+    restart: always
+    volumes:
+      - './config:/opt/openlist/data:rw'
+      - './data:/data'
+    ports:
+      - '5244:5244'
+      - '5245:5245' # https
+    user: "1000:1000"
+    environment:
+      - UMASK=022
+      - TZ=Asia/Shanghai
+    container_name: openlist
+    image: 'openlistteam/openlist:latest'

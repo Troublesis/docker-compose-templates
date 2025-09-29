@@ -1,0 +1,15 @@
+# 项目主页: https://github.com/louislam/uptime-kuma
+# docker hub 更新页: https://hub.docker.com/r/louislam/uptime-kuma/tags
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    ports:
+      - "3001:3001"
+    volumes:
+      - "./data:/app/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai

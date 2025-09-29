@@ -1,0 +1,14 @@
+# 项目主页: https://github.com/dani-garcia/vaultwarden
+# docker hub 更新页: https://hub.docker.com/r/vaultwarden/server/tags
+
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    ports:
+      - 8000:80
+    volumes:
+      - ./data:/data
+    environment:
+      - HTTP=true
+    restart: always

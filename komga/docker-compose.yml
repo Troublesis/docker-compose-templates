@@ -1,0 +1,22 @@
+# 项目主页: https://github.com/gotson/komga
+# docker hub 更新页: https://hub.docker.com/r/gotson/komga/tags
+
+services:
+  komga:
+    image: gotson/komga:latest
+    container_name: komga
+    # mem_limit: 4096m 可选，这个容器内存占用比较大，可以限制一下
+    # mem_reservation: 2048m
+    environment:
+      - TZ=Asia/Shanghai
+      # - JAVA_TOOL_OPTIONS=-Xmx4g
+      - PUID=1000
+      - PGID=1000
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./data:/data
+    ports:
+      - 25600:25600
+    restart: unless-stopped

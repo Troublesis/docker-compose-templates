@@ -1,0 +1,25 @@
+# 项目主页: https://github.com/linuxserver/docker-code-server
+# docker hub 更新页: https://hub.docker.com/r/linuxserver/code-server/tags
+
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    hostname: code-server # change the name after root@ in terminal
+    network_mode: host
+    environment:
+      - PUID=0 # 0 为root权限
+      - PGID=0
+      - TZ=Asia/Shanghai
+      - PASSWORD=${PASSWORD:-password} # 可选
+      # - SUDO_PASSWORD= # 可选
+      # - HASHED_PASSWORD= # 可选
+      # - SUDO_PASSWORD_HASH= # 可选
+      # - PROXY_DOMAIN=your.domian.com # 可选
+      - DEFAULT_WORKSPACE=/config # 可选，默认开启后的起始路径
+    volumes:
+        - ./config:/config
+        - /var/run/docker.sock:/var/run/docker.sock # 挂载docker，安装好后还需要使用`apt update && apt install -y docker.io`才可以真正使用docker
+    ports:
+      - 8443:8443
+    restart: always

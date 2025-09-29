@@ -1,0 +1,13 @@
+# 项目主页: https://github.com/pawelmalak/snippet-box
+# docker hub 更新页: https://hub.docker.com/r/pawelmalak/snippet-box/tags
+
+services:
+  snippet-box:
+    # image: pawelmalak/snippet-box:arm  # arm64
+    image: pawelmalak/snippet-box
+    container_name: snippet-box
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 5000:5000
+    restart: unless-stopped

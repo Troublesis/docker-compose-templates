@@ -1,0 +1,20 @@
+# 项目主页: https://github.com/hurlenko/aria2-ariang-docker
+# docker hub 更新页: https://hub.docker.com/r/hurlenko/aria2-ariang/tags
+
+services:
+  aria2:
+    # 认证失败修复方法: 系统设置 > AriaNG 设置 > RPC > 填写：Aria2 RPC 密钥
+    image: hurlenko/aria2-ariang
+    container_name: aria2
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./config:/aria2/conf
+      - ./data:/aria2/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - RPC_SECRET=${RPC_SECRET:-password}
+      - ARIA2RPCPORT=10088

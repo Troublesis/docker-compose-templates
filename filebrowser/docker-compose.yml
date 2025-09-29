@@ -1,0 +1,17 @@
+# 项目主页: https://github.com/filebrowser/filebrowser
+# docker hub 更新页: https://hub.docker.com/r/
+
+services:
+  filebrowser:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    user: "1000:1000"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./database:/database
+      - ./config:/config
+      - ./data:/srv
+    ports:
+      - "10066:10066"
+    restart: always
